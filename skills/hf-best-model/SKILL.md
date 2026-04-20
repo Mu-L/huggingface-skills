@@ -25,7 +25,7 @@ Extract from the user's message:
 - **Task**: what they want the model to do (coding, math/reasoning, chat, OCR, RAG/retrieval, speech recognition, image classification, multimodal, agents, etc.)
 - **Device**: hardware constraints (MacBook M-series 8/16/32/64GB unified memory, RTX GPU with VRAM amount, CPU-only, cloud/no constraint, etc.)
 
-If device is not mentioned, assume **MacBook 16GB** and say so. If the task is genuinely ambiguous, ask one clarifying question.
+If device is not mentioned, skip filtering entirely and return the highest-performing models regardless of size. If the task is genuinely ambiguous, ask one clarifying question.
 
 ### Device → max parameter budget
 
@@ -97,11 +97,14 @@ Extract from each response:
 
 ## Step 5: Filter and rank
 
+**If a device was specified:**
 1. Remove models exceeding the fp16 parameter budget for the device
 2. Flag models that fit only with Q4 quantization (multiply budget by ~4 for Q4 capacity)
-3. Rank remaining models by benchmark score (descending)
-4. Keep top 5-8 models
-5. If a highly-ranked model is slightly over budget, keep it with a "needs Q4" note — don't silently drop it
+3. If a highly-ranked model is slightly over budget, keep it with a "needs Q4" note — don't silently drop it
+
+**If no device was mentioned:** skip all size filtering — just rank by benchmark score.
+
+Then: rank by benchmark score (descending), keep top 5-8 models.
 
 Include proprietary models (GPT-4, Claude, Gemini) if they appear on leaderboards, but flag them as "API only / not self-hostable". If the user explicitly asked for local/open models only, exclude them.
 
