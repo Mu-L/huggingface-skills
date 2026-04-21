@@ -15,6 +15,12 @@
       "description": "Train or fine-tune language models using TRL on Hugging Face Jobs infrastructure. Covers SFT, DPO, GRPO and reward modeling training methods, plus GGUF conversion for local deployment. Includes hardware selection, cost estimation, Trackio monitoring, and Hub persistence."
     },
     {
+      "name": "huggingface-local",
+      "source": "./skills/huggingface-local",
+      "skills": "./",
+      "description": "Run Hugging Face models locally with llama.cpp and GGUF on CPU, Metal, CUDA, or ROCm. Covers Hub discovery with llama.cpp local-app pages, quant selection, exact GGUF file lookup, conversion, and OpenAI-compatible local serving."
+    },
+    {
       "name": "huggingface-paper-publisher",
       "source": "./skills/huggingface-paper-publisher",
       "skills": "./",
